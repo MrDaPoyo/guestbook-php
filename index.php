@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Save the guestbook entry to a file or database
         // For simplicity, we'll just append it to a text file
-        $entry = "Name: $name\nMessage: $message\nWebsite: $website\n\n";
+        $entry = "Name: $name - Website: $website\nMessage: $message\n\n";
         file_put_contents('guestbook.txt', $entry, FILE_APPEND);
 
         echo 'Thank you for signing the guestbook!';
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="message">Message:</label>
         <textarea name="message" id="message" required></textarea><br>
 
-        <input type="submit" value="Sign Guestbook">
+        <input type="submit" value="Sign Guestbook" title="Submit form">
     </form>
     <?php
     // Display the guestbook entries
