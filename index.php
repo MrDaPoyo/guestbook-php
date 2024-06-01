@@ -3,6 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form data
     $name = $_POST['name'];
+    $website = $_POST['website'];
     $message = $_POST['message'];
 
     // Validate the form data (you can add more validation if needed)
@@ -11,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Save the guestbook entry to a file or database
         // For simplicity, we'll just append it to a text file
-        $entry = "Name: $name\nMessage: $message\n\n";
+        $entry = "Name: $name\nMessage: $message\nWebsite: $website\n\n";
         file_put_contents('guestbook.txt', $entry, FILE_APPEND);
 
         echo 'Thank you for signing the guestbook!';
@@ -28,9 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Guestbook</h1>
 
     <form method="POST" action="">
-        <label for="name">Name:</label>
+        <label for="name">What's your name?</label>
         <input type="text" name="name" id="name" required><br>
-
+        <label for="website">What's your website's URL?</label>
+        <input type="text" name="website" id="website"><br>
         <label for="message">Message:</label>
         <textarea name="message" id="message" required></textarea><br>
 
