@@ -1,66 +1,123 @@
-<?php
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
-    $name = $_POST['name'];
-    $website = $_POST['website'];
-    $message = $_POST['message'];
-
-    // Validate the form data (you can add more validation if needed)
-    if (empty($name) || empty($message)) {
-        echo 'Please fill in all fields.';
-    } else {
-        // Save the guestbook entry to a file or database
-        // For simplicity, we'll just append it to a text file
-        $entry = "$name\n$website\n$message\n\n";
-        file_put_contents('guestbook.txt', $entry, FILE_APPEND);
-
-        echo 'Thank you for signing the guestbook!';
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Guestbook</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
     <style>
         body {
-            font-family: "VT323", monospace;
-            font-weight: 400;
-            font-style: normal;
+            background-color: #FFFFCC;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
         }
+
+        h1 {
+            color: #FF9900;
+            font-size: 36px;
+            text-align: center;
+            text-shadow: 2px 2px #000000;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: auto;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 90%;
+            height: 50px;
+            margin: 0 5%;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        textarea {
+            width: 90%;
+            height: 50px;
+            margin: 0 5%;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            resize: vertical;
+            margin: 0 5%;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #FF9900;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #FFCC33;
+        }
+
+        h2 {
+            color: #FF9900;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #333333;
+            margin-bottom: 10px;
+        }
+        h4 {margin: 0;}
     </style>
-    <h1>Guestbook</h1>
+    <h1>Welcome to the Guestbook</h1>
 
-    <form method="POST" action="">
-        <label for="name">What's your name?</label>
-        <input type="text" name="name" id="name" required><br>
-        <label for="website">What's your website's URL?</label>
-        <input type="url" name="website" id="website"><br>
-        <label for="message">Message:</label>
-        <textarea name="message" id="message" required></textarea><br>
-
-        <input type="submit" value="Sign Guestbook" title="Submit form">
-    </form>
     <?php
-    // Display the guestbook entries
-    $entries = file_get_contents('guestbook.txt');
-    echo "<h2>Guestbook Entries:</h2>";
-    $entriesArray = explode("\n\n", $entries);
-    foreach ($entriesArray as $entry) {
-        $lines = explode("\n", $entry);
-        echo "<div class='card'>";
-        echo "<h3 style='display: inline;'>Name: $lines[0] - Website: <a href='$lines[1]'> $lines[1] </a></h3>";
-        echo "<p>Content: " . $lines[2] . "</p>";
-        echo "</div>";
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Get the form data
+        $name = $_POST['name'];
+        $message = $_POST['message'];
+
+        // Validate the form data (you can add more validation if needed)
+
+        // Save the entry to a file or database
+        $entry = "<h4>$name</h4><p>$message</p>\n";
+        file_put_contents('entries.txt', $entry, FILE_APPEND);
+
+        // Display a success message
+        echo '<p>Thank you for signing the guestbook! :D</p>';
     }
     ?>
 
+    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required><br>
+
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" required></textarea><br>
+
+        <input type="submit" value="Sign Guestbook">
+    </form>
+
+    <h2>Guestbook Entries</h2>
+
+    <?php
+    // Read and display the guestbook entries
+    $entries = file_get_contents('entries.txt');
+    echo nl2br($entries);
+    ?>
 </body>
 </html>
