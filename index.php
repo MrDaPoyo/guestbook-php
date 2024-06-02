@@ -44,8 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<h2>Guestbook Entries:</h2>";
     $entriesArray = explode("\n\n", $entries);
     foreach ($entriesArray as $entry) {
+        $lines = explode("\n", $entry);
         echo "<div class='card'>";
-        echo "<pre>$entry</pre>";
+        echo "<h3 style='display: inline;'>Name: $lines[0] - Website: <a href='$lines[1]'> $lines[1] </a></h3>";
+        echo "<p>Content: " . $lines[2] . "</p>";
         echo "</div>";
     }
     ?>
