@@ -24,8 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Guestbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
+    <style>
+        body {
+            font-family: "VT323", monospace;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
     <h1>Guestbook</h1>
 
     <form method="POST" action="">
