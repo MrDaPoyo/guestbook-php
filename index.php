@@ -96,7 +96,14 @@
 
         // Save the entry to a file or database
         $entry = "<h4>$name - $date</h4><p>$message</p>\n";
-        file_put_contents('entries.txt', $entry, FILE_APPEND);
+        // Read existing entries
+        $existingEntries = file_get_contents('entries.txt');
+        
+        // Prepend the new entry to the existing entries
+        $newEntry = $entry . $existingEntries;
+        
+        // Save the updated entries to the file
+        file_put_contents('entries.txt', $newEntry);
 
         // Display a success message
         echo '<p>Thank you for signing the guestbook! :D</p>';
