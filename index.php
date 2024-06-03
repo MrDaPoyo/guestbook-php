@@ -90,11 +90,12 @@
         // Get the form data
         $name = $_POST['name'];
         $message = $_POST['message'];
+        $date = date('d-m-Y');
 
         // Validate the form data (you can add more validation if needed)
 
         // Save the entry to a file or database
-        $entry = "<h4>$name</h4><p>$message</p>\n";
+        $entry = "<h4>$name - $date</h4><p>$message</p>\n";
         file_put_contents('entries.txt', $entry, FILE_APPEND);
 
         // Display a success message
