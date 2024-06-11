@@ -95,15 +95,25 @@
         // Validate the form data (you can add more validation if needed)
 
         // Save the entry to a file or database
-        $entry = "<h4>$name - $date</h4><p>$message</p>\n";
+        $entry = [
+            'name' => $name,
+            'date' => $date,
+            'message' => $message
+        ];
         // Read existing entries
-        $existingEntries = file_get_contents('entries.txt');
-        
-        // Prepend the new entry to the existing entries
-        $newEntry = $entry . $existingEntries;
         
         // Save the updated entries to the file
-        file_put_contents('entries.txt', $newEntry);
+        // Convert the entry to JSON format
+        $entries = json_decode($entries, true); // Convert JSON to array
+
+// Append the new entry to the existing entries
+        $entries[] = $entry;
+
+// Convert the updated entries back to JSON format
+$jsonEntry = json_encode($entries);
+
+// Save the JSON entry to the file
+file_put_contents('entries.json', $jsonEntry);
 
         // Display a success message
         echo '<p>Thank you for signing the guestbook! :D</p>';
@@ -124,8 +134,13 @@
 
     <?php
     // Read and display the guestbook entries
-    $entries = file_get_contents('entries.txt');
-    echo nl2br($entries);
+    $entries = file_get_contents('entries.json');
+    $decodedEntries = json_decode($entries, true);
+    if ($decodedEntries) {
+        foreach ($decodedEntries as $entry) {
+            echo $entry['name'] . ': ' . $entry['message'];
+        }
+    }
     ?>
 </body>
 </html>
